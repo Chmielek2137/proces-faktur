@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_0v7dsdm" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="PrzypisanieAkceptantow" name="Przypisanie Akceptantów">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Kwota Netto">
+        <inputExpression id="inputExpression_1" typeRef="double">
+          <text>kNetto</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_176lglb" label="Typ wydatku">
+        <inputExpression id="LiteralExpression_0roqsdp" typeRef="string">
+          <text>typWydatku</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Akceptacja przełożonego" name="akceptacja_przelozonego" typeRef="boolean" />
+      <output id="OutputClause_1cfczer" label="Akceptacja dyrektora" name="akceptacja_dyrektora" typeRef="boolean" />
+      <rule id="DecisionRule_0ttffd6">
+        <inputEntry id="UnaryTests_1vxb1j6">
+          <text>[0..500[</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wlrn39">
+          <text>"wydatki bieżące"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1adnas9">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0218k4r">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1e8egus">
+        <inputEntry id="UnaryTests_0xjokci">
+          <text>[500..2000[</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1t12nqd">
+          <text>"wydatki bieżące"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1c29v2v">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ufjvx6">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06b5c2j">
+        <inputEntry id="UnaryTests_1uooyph">
+          <text>&gt;= 2000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xl6dsb">
+          <text>"wydatki bieżące"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0yme4gf">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ts2732">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h8xw4y">
+        <inputEntry id="UnaryTests_0jdne06">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a8wqu8">
+          <text>"inwestycje"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05t4me8">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_12yzasy">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03ovy21">
+        <inputEntry id="UnaryTests_1a5y119">
+          <text>&lt; 500</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w41o2x">
+          <text>"delegacja"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1u1x46e">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0rxtriy">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qzqz48">
+        <inputEntry id="UnaryTests_1r42s8x">
+          <text>&gt;= 500</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f0g2gg">
+          <text>"delegacja"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07jm5iu">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1jtino0">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

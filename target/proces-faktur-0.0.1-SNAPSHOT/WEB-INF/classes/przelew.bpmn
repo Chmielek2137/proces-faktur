@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0d03dzk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+  <bpmn:process id="Przelew" name="Przelew" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Żądanie wykonania przelewu">
+      <bpmn:outgoing>SequenceFlow_0p1bses</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="przelewMsgId" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1s0exm3" name="Wysłanie potwierdzenie wykonania przelewu">
+      <bpmn:incoming>SequenceFlow_1q95nq6</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="potwierdzeniePrzelewuMsgId" camunda:class="pl.projekt.procesfaktur.PrzelewCallback" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0m3jd8x" name="Oczekiwanie na wykonanie przelewu">
+      <bpmn:incoming>SequenceFlow_0p1bses</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0u7jyf4</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0p1bses" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_0m3jd8x" />
+    <bpmn:sequenceFlow id="SequenceFlow_0u7jyf4" sourceRef="IntermediateThrowEvent_0m3jd8x" targetRef="Task_11dfjsg" />
+    <bpmn:sequenceFlow id="SequenceFlow_1q95nq6" sourceRef="Task_11dfjsg" targetRef="EndEvent_1s0exm3" />
+    <bpmn:scriptTask id="Task_11dfjsg" name="Wykonywanie przelewu" camunda:resultVariable="czyPrzelano">
+      <bpmn:incoming>SequenceFlow_0u7jyf4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1q95nq6</bpmn:outgoing>
+      <bpmn:script>${true}</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmn:message id="potwierdzeniePrzelewuMsgId" name="potwierdzeniePrzelewuMsg" />
+  <bpmn:message id="przelewMsgId" name="przelewMsg" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Przelew">
+      <bpmndi:BPMNShape id="StartEvent_1qvo1qv_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="145" width="52" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_16b69pu_di" bpmnElement="EndEvent_1s0exm3">
+        <dc:Bounds x="474" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="459" y="145" width="68" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0fwtj5k_di" bpmnElement="IntermediateThrowEvent_0m3jd8x">
+        <dc:Bounds x="252" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="231" y="145" width="79" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0p1bses_di" bpmnElement="SequenceFlow_0p1bses">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="252" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0u7jyf4_di" bpmnElement="SequenceFlow_0u7jyf4">
+        <di:waypoint x="288" y="120" />
+        <di:waypoint x="334" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1q95nq6_di" bpmnElement="SequenceFlow_1q95nq6">
+        <di:waypoint x="434" y="120" />
+        <di:waypoint x="474" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_1ih6tjz_di" bpmnElement="Task_11dfjsg">
+        <dc:Bounds x="334" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
